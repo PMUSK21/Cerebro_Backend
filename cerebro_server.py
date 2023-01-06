@@ -2,6 +2,7 @@ from flask import Flask, Response, request
 import json
 from api import interface
 from api import whitelist
+from api import input_validation
 import json
 
 
@@ -18,8 +19,24 @@ import json
 ##########################
 # Server setup
 #
+
 app = Flask(__name__)
 
+def parse_config() -> json:
+    with open("config.json", "r") as config:
+        config = json.load(config)
+    return config
+
+config = parse_config()
+
+def production_toggle(func):
+    def wrap():
+        if config.get("PRODUCTION_MODE", False) == False:
+            return func()
+        else:
+            return Response(json.dumps("Endpoint disabled in production mode."), status=400, mimetype='application/json')
+    wrap.__name__ = func.__name__
+    return wrap
 
 ##########################
 # Colleges methods
@@ -27,6 +44,7 @@ app = Flask(__name__)
 
 # returns all valid college IDs in the database
 @app.route("/college_ids", methods = ["GET", "POST"])
+@production_toggle
 def college_ids() -> json:
     result = interface.get_college_ids()
     return Response(json.dumps(result), status=200, mimetype='application/json')
@@ -42,19 +60,10 @@ def college() -> json:
         user_data = request.get_json()
         college_id = user_data.get("id", None)
     
-    # ensure user provided a college id and a year
-    if college_id == None:
-        return Response(json.dumps("Bad request. You must provide a valid college ID"), status=400, mimetype='application/json')
-    
-    # cast to int types
-    try:
-        college_id = int(college_id)
-    except BaseException:
-        return Response(json.dumps("Bad request. College ID must be a valid integer."), status=400, mimetype='application/json')
-    
     # validate the college id
-    if college_id not in whitelist.COLLEGE_IDS:
-        return Response(json.dumps("Bad request. Invalid college ID."), status=400, mimetype='application/json')
+    error = input_validation.validate_college_id(college_id)
+    if error is not None:
+        return error
     
     result = interface.get_college(str(college_id))
     return Response(json.dumps(result), status=200, mimetype='application/json')
@@ -74,6 +83,7 @@ def colleges() -> json:
 
 # returns all valid highschool IDs from the database
 @app.route('/highschool_ids', methods = ["GET", "POST"])
+@production_toggle
 def highschool_ids() -> json:
     result = interface.get_highschool_ids()
     return Response(json.dumps(result), status=200, mimetype='application/json')
@@ -89,19 +99,10 @@ def highschool() -> json:
         user_data = request.get_json()
         highschool_id = user_data.get("id", None)
     
-    # ensure user provided a highschool id and a year
-    if highschool_id == None:
-        return Response(json.dumps("Bad request. You must provide a valid highschool ID"), status=400, mimetype='application/json')
-    
-    # cast to int types
-    try:
-        highschool_id = int(highschool_id)
-    except BaseException:
-        return Response(json.dumps("Bad request. Highschool ID must be a valid integer."), status=400, mimetype='application/json')
-    
     # validate the highschool id
-    if highschool_id not in whitelist.HIGHSCHOOL_IDS:
-        return Response(json.dumps("Bad request. Invalid highschool ID."), status=400, mimetype='application/json')
+    error = input_validation.validate_highschool_id(highschool_id)
+    if error is not None:
+        return error
     
     result = interface.get_highschool(str(highschool_id))
     return Response(json.dumps(result), status=200, mimetype='application/json')
@@ -109,6 +110,7 @@ def highschool() -> json:
 
 # returns all information about all highschools in the database
 @app.route('/highschools', methods = ["GET", "POST"])
+@production_toggle
 def highschools() -> json:
     result = interface.get_highschools()
     return Response(json.dumps(result), status=200, mimetype='application/json')
@@ -121,6 +123,7 @@ def highschools() -> json:
 
 # returns all information about the player with the given player id
 @app.route('/player_ids', methods = ["GET", "POST"])
+@production_toggle
 def player_ids() -> json:
     result = interface.get_player_ids()
     return Response(json.dumps(result), status=200, mimetype='application/json')
@@ -136,19 +139,10 @@ def player() -> json:
         user_data = request.get_json()
         player_id = user_data.get("id", None)
     
-    # ensure user provided a Player ID and a year
-    if player_id == None:
-        return Response(json.dumps("Bad request. You must provide a valid Player ID"), status=400, mimetype='application/json')
-    
-    # cast to int types
-    try:
-        player_id = int(player_id)
-    except BaseException:
-        return Response(json.dumps("Bad request. Player ID must be a valid integer."), status=400, mimetype='application/json')
-    
-    # validate the Player ID
-    if player_id not in whitelist.PLAYER_IDS:
-        return Response(json.dumps("Bad request. Invalid Player ID."), status=400, mimetype='application/json')
+    # validate the player id
+    error = input_validation.validate_player_id(player_id)
+    if error is not None:
+        return error
     
     result = interface.get_player(player_id)
     return Response(json.dumps(result), status=200, mimetype='application/json')
@@ -156,6 +150,7 @@ def player() -> json:
 
 # returns all information about all players in the database
 @app.route('/players', methods = ["GET", "POST"])
+@production_toggle
 def players() -> json:
     result = interface.get_players()
     return Response(json.dumps(result), status=200, mimetype='application/json')
@@ -178,35 +173,24 @@ def player_commits() -> json:
         college_id = user_data.get("id", None)
         year = user_data.get("year", None)
     
-    # ensure user provided a college id and a year
-    if college_id == None or year == None:
-        return Response(json.dumps("Bad request. You must provide a valid college ID and commit year."), status=400, mimetype='application/json')
-    
-    # cast to int types
-    try:
-        college_id = int(college_id)
-    except BaseException:
-        return Response(json.dumps("Bad request. College ID must be a valid integer."), status=400, mimetype='application/json')
-    try:
-        year = int(year)
-    except BaseException:
-        return Response(json.dumps("Bad request. Year must be a valid integer."), status=400, mimetype='application/json')
-    
-    # validate the college id
-    if college_id not in whitelist.COLLEGE_IDS:
-        return Response(json.dumps("Bad request. Invalid college ID."), status=400, mimetype='application/json')
+    # validate the user college id
+    error = input_validation.validate_college_id(college_id)
+    if error is not None:
+        return error
     
     # validate the year
-    if year < whitelist.COMMIT_YEARS_MIN or year > whitelist.COMMIT_YEARS_MAX:
-        return Response(json.dumps("Bad request. Year provided is outside the acceptable range."), status=400, mimetype='application/json')
+    error = input_validation.validate_commit_year(year)
+    if error is not None:
+        return error
     
     # reasonable assurance we can pass this input to the database
     result = interface.get_commits_per_school_year(college_id, year)
     return Response(json.dumps(result), status=200, mimetype='application/json')
 
 
-# returns all information about all commits in the entire database 
+# returns all information about all commits in the entire database
 @app.route("/commits", methods = ["GET", "POST"])
+@production_toggle
 def commits() -> json:
     result = interface.get_all_commits()
     return Response(json.dumps(result), status=200, mimetype='application/json')
@@ -222,19 +206,10 @@ def commit_years() -> json:
         user_data = request.get_json()
         college_id = user_data.get("id", None)
     
-    # ensure user provided a college id and a year
-    if college_id == None:
-        return Response(json.dumps("Bad request. You must provide a valid college ID"), status=400, mimetype='application/json')
-    
-    # cast to int types
-    try:
-        college_id = int(college_id)
-    except BaseException:
-        return Response(json.dumps("Bad request. College ID must be a valid integer."), status=400, mimetype='application/json')
-    
-    # validate the college id
-    if college_id not in whitelist.COLLEGE_IDS:
-        return Response(json.dumps("Bad request. Invalid college ID."), status=400, mimetype='application/json')
+    # validate the user input
+    error = input_validation.validate_college_id(college_id)
+    if error is not None:
+        return error
     
     result = interface.get_valid_college_commit_years(str(college_id))
     return Response(json.dumps(result), status=200, mimetype='application/json')
@@ -244,13 +219,7 @@ def commit_years() -> json:
 # Launch the server
 #
 
-def parse_config() -> json:
-    with open("config.json", "r") as config:
-        config = json.load(config)
-    return config
-
 if __name__ == "__main__":
-    config = parse_config()
     ip = config.get("SERVER_IP", "0.0.0.0") # defaults to allow any ip to connect on your local network
     port = config.get("SERVER_PORT", 1130)
     

@@ -23,7 +23,7 @@ The API can be configured through the use of the *config.json* file located at t
 - SERVER_PORT
 - PRODUCTION_MODE
 
-By default, the server IP is set to **0.0.0.0**, which runs the server on ip address *127.0.0.1* but allows anyone on your local network to connect to the server as long as firewall permissions are set up correctly. The port is set to **1130**. You can change these settings by modifying the *config.json* file and then restarting the API.
+By default, the *SERVER_IP* is set to **0.0.0.0**, which runs the server on ip address *127.0.0.1* but allows anyone on your local network to connect to the server as long as firewall permissions are set up correctly. *SERVER_PORT* is set to **1130**. You can change these settings by modifying the *config.json* file and then restarting the API.
 
 *PRODUCTION_MODE* is defaulted to *false*. When *PRODUCTION_MODE* is enabled, the endpoints that are noted below will not be enabled as to avoid anyone from using them and hogging your servers resources.
 

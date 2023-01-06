@@ -97,7 +97,6 @@ Example:
 127.0.0.1:1130/highschools
 ```
 
-*NOTE: This is meant to be used only for development and testing purposes*
 *NOTE: Disabled in production mode*
 
 ## /player_ids
@@ -129,7 +128,6 @@ Example:
 127.0.0.1:1130/players
 ```
 
-*NOTE: This is meant to be used only for development and testing purposes*
 *NOTE: Disabled in production mode*
 
 ## /player_commits
@@ -150,7 +148,6 @@ Example:
 127.0.0.1:1130/commits
 ```
 
-*NOTE: This is meant to be used only for development and testing purposes*
 *NOTE: Disabled in production mode*
 
 ## /commit_years

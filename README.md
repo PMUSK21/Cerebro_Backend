@@ -6,8 +6,8 @@ This repository is dedicated to the backend development of the brains behind **C
 
 ## Setup
 
-Requirements:
-Python3.8 or newer
+You are required to have Python3.8 or newer
+
 [Download Python Here](https://www.python.org/downloads/)
 
 At the root level of this project, run this command:

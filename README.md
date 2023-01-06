@@ -4,7 +4,7 @@
 
 This repository is dedicated to the backend development of the brains behind **Cerebro 113**; practically speaking, this includes database management and secure REST API access to it.
 
-## Setup
+## Installation
 
 You are required to have Python3.8 or newer
 
@@ -15,9 +15,15 @@ At the root level of this project, run this command:
 pip install -e .
 ```
 
-By default, the server IP and port are set to **0.0.0.0** and **1130**, however you can change this by modifying the *config.json* file found in the root of this project's directory.
+## Configuration
+
+By default, the server IP is set to **0.0.0.0**, which runs the server on ip address *127.0.0.1* but allows anyone on your local network to connect to the server as long as firewall permissions are set up correctly. The port is set to **1130**. You can change these settings by modifying the *config.json* file found in the root of this project's directory.
 
 The *config.json* file also specifies *PRODUCTION_MODE*, which is defaulted to *false*. When *PRODUCTION_MODE* is enabled, the endpoints that are noted below will not be enabled as to avoid anyone from using them and hogging your servers resources.
+
+*PRODUCTION_MODE* is designed to allow development to be effecient by exposing database queries that help the develop of the front end see the underlying data structures available in the database. It is important to not host this API in a publically available manner when *PRODUCTION_MODE* is set to *False* -- this will expose all of your data to anyone, and also enable someone to hog all the server system resources.
+
+In short: *PRODUCTION_MODE* set to *False* is perfectly acceptable to be used at any point in time, except for when you want to deploy Cerebro 113 to the world.
 
 ## Running API
 

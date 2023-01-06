@@ -11,7 +11,7 @@ import json
 # Run this file to start a flask API on your local machine that enables the front-end
 # to get information to display about commits.
 #
-# NOTE: Running this file locally is not intended to be a production ready API.. use a
+# NOTE: Running this API locally is not intended to be a production ready API.. use a
 # dedicated WSGI server for that on a cloud platform instead.
 #
 

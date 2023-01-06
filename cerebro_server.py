@@ -1,7 +1,7 @@
 from flask import Flask, Response, request
 import json
+from api import config_parser
 from api import interface
-from api import whitelist
 from api import input_validation
 import json
 
@@ -16,27 +16,26 @@ import json
 #
 
 
-##########################
-# Server setup
+##
+# Setup
 #
-
 app = Flask(__name__)
+config = config_parser.parse_config()
+IP = config.get("SERVER_IP", "0.0.0.0") # defaults to allow any ip to connect on your local network
+PORT = config.get("SERVER_PORT", 1130) # defaults to port 1130
+PRODUCTION_MODE = config.get("PRODUCTION_MODE", False) # default to false
 
-def parse_config() -> json:
-    with open("config.json", "r") as config:
-        config = json.load(config)
-    return config
 
-config = parse_config()
-
+# decorator for disabling endpoints when in production mode
 def production_toggle(func):
     def wrap():
-        if config.get("PRODUCTION_MODE", False) == False:
+        if PRODUCTION_MODE == False:
             return func()
         else:
             return Response(json.dumps("Endpoint disabled in production mode."), status=400, mimetype='application/json')
     wrap.__name__ = func.__name__
     return wrap
+
 
 ##########################
 # Colleges methods
@@ -220,7 +219,4 @@ def commit_years() -> json:
 #
 
 if __name__ == "__main__":
-    ip = config.get("SERVER_IP", "0.0.0.0") # defaults to allow any ip to connect on your local network
-    port = config.get("SERVER_PORT", 1130)
-    
-    app.run(ip, port)
+    app.run(IP, PORT)

@@ -17,7 +17,7 @@ pip install -e .
 
 By default, the server IP and port are set to **0.0.0.0** and **1130**, however you can change this by modifying the *config.json* file found in the root of this project's directory.
 
-The *config.json* file also specifies *PRODUCTION_MODE*, which is defaulted to *false*. When *PRODUCTION_MODE* is enabled, 
+The *config.json* file also specifies *PRODUCTION_MODE*, which is defaulted to *false*. When *PRODUCTION_MODE* is enabled, the endpoints that are noted below will not be enabled as to avoid anyone from using them and hogging your servers resources.
 
 ## Running API
 

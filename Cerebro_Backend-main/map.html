@@ -1,0 +1,142 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name= "viewport" content= "width=device-width, initial-scale=1.0">
+    <title> MapSetup </title>
+    <link rel="stylesheet" href= "CSS/style.css">
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+    <link rel="stylesheet" href="CSS/leaflet-sidepanel.css" />
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+    <script src="Javascript/all_schools.js"></script>   
+    
+
+</head>
+<body>
+    <section>
+        <header>
+            <a href ="#" class="logo">Cerebro113</a>
+            <div class="toggleMenu" onclick= "toggleMenu();"></div>
+            <ul class="navigation">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="https://twitter.com/Cerebro113">TWITTER</a></li>
+                <li><a href="#">CREDITS</a></li>
+            </ul>
+        </header>
+        <div class="content"></div>
+             
+        
+    </section>
+
+<div id="map">
+<div id="mySidepanelRight" class="sidepanel" aria-label="side panel" aria-hidden="false">
+			<div class="sidepanel-inner-wrapper">
+				<nav class="sidepanel-tabs-wrapper" aria-label="sidepanel tab navigation">
+					<ul class="sidepanel-tabs">
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-1">
+								SCHOOL
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-2">
+								CLASS
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-3">
+								RANK
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-4">
+								STATE
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<div class="sidepanel-content-wrapper">
+					<div class="sidepanel-content">
+						<div class="sidepanel-tab-content" data-tab-content="tab-1">
+                            <h4 id="School_Tab"></h4>
+                            <h4><input type="checkbox" id="checkbox"><label class="container">  Virginia Tech</label></h4>
+                           <script> 
+                                let list = document.getElementById("School_Tab");
+                                school_names.forEach((school_name) => {
+                                    
+                                let BUTTON = document.createElement("BUTTON");
+                                    BUTTON.innerText = school_name;
+                                    BUTTON.style.color = 'white';
+                                    BUTTON.style.backgroundColor= '#191a1d';
+                                    BUTTON.style.width= "100%";
+                                    BUTTON.style.height= "35px";
+                                    
+                                        list.appendChild(BUTTON);});
+                                        
+                                    list.onclick = function() {console.log('hello world');};
+                                    list.addEventListener('click', function onClick() {
+                                            btn.style.backgroundColor = '#5cbdea';
+                                            btn.style.borderColor = 'white';
+                                        
+                                        });
+                               
+                            </script>
+                            
+                        </div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-2">
+							<h4>2021</h4>
+                            <h4>2020</h4>
+                            <h4>2019</h4>
+                            
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-3">
+							<h4>2 Star</h4>
+                            <h4>3 Star</h4>
+                            <h4>4 Star</h4>
+                            <h4>5 Star</h4>
+                            
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-4">
+							<h4>Virginia</h4>
+                            <h4>North Carolina</h4>
+                            <h4>Maryland</h4>
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-5">
+							<h4>Content 5</h4>
+						</div>
+					</div>
+				</div>
+                <div class= "search_footer">
+                        <button id = "btn" type="button"> SEARCH
+                    </button>
+                </div>
+			</div>
+			<div class="sidepanel-toggle-container">
+				<button class="sidepanel-toggle-button" type="button" aria-label="toggle side panel"></button>
+			</div>
+		</div>
+	
+  
+    
+
+
+</div>
+    
+    
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+  <script src="Javascript/leaflet-sidepanel.min.js"></script>  
+ <script src='Javascript/Leaflet.fullscreen.min.js'></script>
+  
+ 
+<script src= "Javascript/Map.js"></script>
+
+    
+
+
+
+</body>
+</html>

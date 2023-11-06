@@ -1,0 +1,142 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name= "viewport" content= "width=device-width, initial-scale=1.0">
+    <title> MapSetup </title>
+    <link rel="stylesheet" href= "CSS/style.css">
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+    <link rel="stylesheet" href="CSS/leaflet-sidepanel.css" />
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+    <script src="Javascript/all_schools.js"></script> 
+    <script src="Javascript/all_years.js"></script>
+    <script src="Javascript/all_ranks.js"></script>
+    <script src = "Javascript/all_states.js"></script>
+    <script src="Javascript/SchoolsCreate.js"></script>
+    <script src="Javascript/YearsCreate.js"></script>
+    <script src = "Javascript/RanksCreate.js"></script>
+    <script src = "Javascript/StatesCreate.js"></script>
+    <script src = "Javascript/SearchButton.js"></script>
+    <script src = "Javascript/DataParse.js"></script>
+    <script src = "Javascript/RankConvert.js"></script>
+    <script src = "Javascript/Data_Query.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script
+  src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+  integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+  crossorigin="anonymous"></script>
+
+    
+
+</head>
+<body>
+    <section>
+        <header>
+            <a href ="#" class="logo">Cerebro113</a>
+            <div class="toggleMenu" onclick= "toggleMenu();"></div>
+            <ul class="navigation">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="https://twitter.com/Cerebro113">TWITTER</a></li>
+                <li><a href="#">CREDITS</a></li>
+            </ul>
+        </header>
+        <div class="content"></div>
+             
+        
+    </section>
+
+<div id="map">
+<div id="mySidepanelRight" class="sidepanel" aria-label="side panel" aria-hidden="false">
+			<div class="sidepanel-inner-wrapper">
+				<nav class="sidepanel-tabs-wrapper" aria-label="sidepanel tab navigation">
+					<ul class="sidepanel-tabs">
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-1" id= "mate">
+								SCHOOL
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-2" id= "jumpHere" >
+								CLASS
+                                
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-3">
+								RANK
+							</a>
+						</li>
+						<li class="sidepanel-tab">
+							<a href="#" class="sidebar-tab-link" role="tab" data-tab-link="tab-4">
+								STATE
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<div class="sidepanel-content-wrapper">
+					<div class="sidepanel-content">
+						<div class="sidepanel-tab-content" data-tab-content="tab-1" id="school_content">
+                            <h4 id="School_Tab"></h4>
+                        
+                            <script> window.onload = createSchools(); </script>
+                            
+                        </div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-2" id= "class_buttons">
+                            <h4 id= "Year_Tab"> </h4>
+                            
+                            <script> window.onload = createYears(); </script>
+                            
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-3">
+							<h4 id = "Rank_Tab"></h4>
+                            
+                              <script> window.onload = createRanks(); </script>
+                            
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-4">
+							<h4 id = "State_Tab"></h4>
+                            
+                              <script> window.onload = createStates(); </script>
+                           
+						</div>
+						<div class="sidepanel-tab-content" data-tab-content="tab-5">
+							<h4>Content 5</h4>
+						</div>
+					</div>
+				</div>
+                <div class= "search_footer">
+                        <button id = "btn" type="button"> SEARCH </button>
+                    
+                           <script> window.onload = SearchBar(); </script>
+                       
+                </div>
+			</div>
+			<div class="sidepanel-toggle-container">
+				<button class="sidepanel-toggle-button" type="button" aria-label="toggle side panel"></button>
+			</div>
+		</div>
+	
+  
+    
+
+
+</div>
+    
+    
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+  <script src="Javascript/leaflet-sidepanel.min.js"></script>  
+ <script src='Javascript/Leaflet.fullscreen.min.js'></script>
+  
+ 
+<script src= "Javascript/Map.js"></script>
+
+    
+
+
+
+</body>
+</html>
